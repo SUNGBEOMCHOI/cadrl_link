@@ -1,0 +1,83 @@
+TebLocalPlannerROS:
+  odom_topic: odom
+  map_frame: /odom
+  
+  # Trajectory
+  
+  teb_autosize: True
+  dt_ref: 0.3 #should be less than 0.6
+  dt_hysteresis: 0.1
+
+  min_samples: 5
+
+  global_plan_overwrite_orientation: True
+  max_global_plan_lookahead_dist: 3.0
+  feasibility_check_no_poses: 5 #Originally 5
+  allow_init_with_backwards_motion: False
+  # Robot  
+
+  max_vel_x: 1.0
+  max_vel_x_backwards: 0.2
+
+# Allowing velocities too low will will stop the obstacle avoidance because low velocities won't actually be high enough to move the robot
+
+  max_vel_theta: 0.4
+
+  acc_lim_theta: 2.0
+  acc_lim_x: 10.0
+  acc_lim_y: 0.0
+
+
+  min_turning_radius: 0.0
+
+  footprint_model: # types: "point", "circular", "two_circles", "line", "polygon"
+   type: "polygon"
+   radius: 0.2 # for type "circular"
+   line_start: [-0.13, 0.0] # for type "line"
+   line_end: [0.13, 0.0] # for type "line"
+   front_offset: 0.2 # for type "two_circles"
+   front_radius: 0.2 # for type "two_circles"
+   rear_offset: 0.2 # for type "two_circles"
+   rear_radius: 0.2 # for type "two_circles"
+   vertices: [[0.15, 0.20], [-0.15, 0.20], [-0.15, -0.20], [0.15, -0.20], [0.22, 0]] # for type "polygon"
+  # Goal Tolerance Parameters
+
+  yaw_goal_tolerance: 6.28  # in rads
+
+  xy_goal_tolerance: 1.5  # in meters
+  free_goal_vel: False
+
+  # Obstacles
+    
+  min_obstacle_dist: 0.5
+  include_costmap_obstacles: True
+  costmap_obstacles_behind_robot_dist: 0.2 #may change to 0.1
+  obstacle_poses_affected: 30 #probably one of problem
+  include_dynamic_obstacles: True
+  legacy_obstacle_association: True
+
+  # Optimization
+    
+  no_inner_iterations: 5
+  no_outer_iterations: 4
+  optimization_activate: True
+  optimization_verbose: False
+  penalty_epsilon: 0.1
+  weight_max_vel_x: 2
+  weight_max_vel_theta: 1
+  weight_acc_lim_x: 1
+  weight_acc_lim_theta: 1
+  weight_kinematics_nh: 1000
+  weight_kinematics_forward_drive: 1000.0
+  weight_kinematics_turning_radius: 0.0
+  weight_optimaltime: 1
+  weight_obstacle: 50
+  weight_dynamic_obstacle: 100 # not in use yet
+  selection_alternative_time_cost: false # not in use yet
+
+  #global_plan_viapoint_sep: 3.0
+  #inflation_dist: 0.1
+  #weight_inflation: 1 #0.1
+  #selection_obst_cost_scale: 100 #100
+  #selection_viapoint_cost_scale: 1.0 # 1
+  #weight_viapoint: 1.0

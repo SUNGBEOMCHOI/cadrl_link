@@ -1,0 +1,471 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This URDF was automatically created by SolidWorks to URDF Exporter! Originally created by Stephen Brawner (brawner@gmail.com) 
+     Commit Version: 1.5.1-0-g916b5db  Build Version: 1.5.7152.31018
+     For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
+<robot
+  name="link_description">
+  <link
+    name="link_description">
+    <inertial>
+      <origin
+        xyz="-0.00683959664372729 -0.443844122468362 -0.0127270207514699"
+        rpy="0 0 0" />
+      <mass
+        value="2.25712074587089" />
+      <inertia
+        ixx="0.00503768783075504"
+        ixy="4.30960898641349E-08"
+        ixz="-2.40410247933642E-06"
+        iyy="0.0112869573486054"
+        iyz="-3.1620753721169E-08"
+        izz="0.0154235137593039" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://link_description/meshes/link_description.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.898039215686275 0.917647058823529 0.929411764705882 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://link_description/meshes/link_description.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <link
+    name="motor_FR">
+    <inertial>
+      <origin
+        xyz="-2.77908985277242E-06 -7.99149635355434E-12 0.00489456333940197"
+        rpy="0 0 0" />
+      <mass
+        value="0.392331941011053" />
+      <inertia
+        ixx="0.000964450037448559"
+        ixy="-2.86275518380137E-14"
+        ixz="1.08973166428666E-07"
+        iyy="0.000964445525197835"
+        iyz="1.1381452828372E-13"
+        izz="0.000145722784840372" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://link_description/meshes/motor_FR.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://link_description/meshes/motor_FR.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="joint1"
+    type="fixed">
+    <origin
+      xyz="0.106990080402908 -0.520072437357651 -0.0874779116165758"
+      rpy="1.5707963267949 0 0" />
+    <parent
+      link="link_description" />
+    <child
+      link="motor_FR" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="wheel_FR">
+    <inertial>
+      <origin
+        xyz="-3.43663935004207E-05 0.0429524655918591 -4.60741023788486E-05"
+        rpy="0 0 0" />
+      <mass
+        value="1.62613225567425" />
+      <inertia
+        ixx="0.00550390517907719"
+        ixy="-3.8259049177798E-07"
+        ixz="2.64117005601572E-08"
+        iyy="0.0102678418204279"
+        iyz="-5.10107907461827E-07"
+        izz="0.0055046856452938" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://link_description/meshes/wheel_FR.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://link_description/meshes/wheel_FR.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="joint5"
+    type="continuous">
+    <origin
+      xyz="0 0 0.0965999999999989"
+      rpy="1.5707963267949 0 1.57079632679491" />
+    <parent
+      link="motor_FR" />
+    <child
+      link="wheel_FR" />
+    <axis
+      xyz="0 1 0" />
+  </joint>
+  <link
+    name="motor_FL">
+    <inertial>
+      <origin
+        xyz="-3.18682266688131E-06 -2.55011289862495E-12 0.0159983891648807"
+        rpy="0 0 0" />
+      <mass
+        value="0.34212825073473" />
+      <inertia
+        ixx="0.000623108104288752"
+        ixy="-4.01616661510946E-14"
+        ixz="9.68645448868394E-08"
+        iyy="0.000623103591642188"
+        iyz="-4.11327949316238E-14"
+        izz="0.000135693595224051" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://link_description/meshes/motor_FL.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://link_description/meshes/motor_FL.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="joint2"
+    type="fixed">
+    <origin
+      xyz="0.106990080402911 -0.367672437357655 -0.0874779116165722"
+      rpy="1.5707963267949 0 3.14159265358979" />
+    <parent
+      link="link_description" />
+    <child
+      link="motor_FL" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="wheel_FL">
+    <inertial>
+      <origin
+        xyz="-3.43663935034599E-05 0.0429524655918592 -4.60741023821654E-05"
+        rpy="0 0 0" />
+      <mass
+        value="1.62613225567425" />
+      <inertia
+        ixx="0.00550390517907719"
+        ixy="-3.82590491778755E-07"
+        ixz="2.64117005604274E-08"
+        iyy="0.0102678418204279"
+        iyz="-5.10107907494059E-07"
+        izz="0.0055046856452938" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://link_description/meshes/wheel_FL.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://link_description/meshes/wheel_FL.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="joint6"
+    type="continuous">
+    <origin
+      xyz="0 0 0.0965999999999991"
+      rpy="1.57079632679491 0 1.57079632679486" />
+    <parent
+      link="motor_FL" />
+    <child
+      link="wheel_FL" />
+    <axis
+      xyz="0 1 0" />
+  </joint>
+  <link
+    name="motor_BR">
+    <inertial>
+      <origin
+        xyz="-3.18682266689518E-06 -2.55015453198837E-12 0.0159983891648807"
+        rpy="0 0 0" />
+      <mass
+        value="0.34212825073473" />
+      <inertia
+        ixx="0.000623108104288753"
+        ixy="-4.01616680293276E-14"
+        ixz="9.68645448868351E-08"
+        iyy="0.000623103591642189"
+        iyz="-4.11327933863058E-14"
+        izz="0.000135693595224051" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://link_description/meshes/motor_BR.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://link_description/meshes/motor_BR.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="joint3"
+    type="fixed">
+    <origin
+      xyz="-0.139509919597089 -0.520072437357651 -0.0874779116165673"
+      rpy="1.5707963267949 0 0" />
+    <parent
+      link="link_description" />
+    <child
+      link="motor_BR" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="wheel_BR">
+    <inertial>
+      <origin
+        xyz="-3.43663935071237E-05 0.0429524655918587 -4.60741023788347E-05"
+        rpy="0 0 0" />
+      <mass
+        value="1.62613225567425" />
+      <inertia
+        ixx="0.00550390517907719"
+        ixy="-3.82590491777973E-07"
+        ixz="2.64117005601768E-08"
+        iyy="0.0102678418204279"
+        iyz="-5.10107907455327E-07"
+        izz="0.0055046856452938" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://link_description/meshes/wheel_BR.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://link_description/meshes/wheel_BR.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="joint7"
+    type="continuous">
+    <origin
+      xyz="0 0 0.0965999999999997"
+      rpy="1.5707963267949 0 1.57079632679491" />
+    <parent
+      link="motor_BR" />
+    <child
+      link="wheel_BR" />
+    <axis
+      xyz="0 1 0" />
+  </joint>
+  <link
+    name="motor_BL">
+    <inertial>
+      <origin
+        xyz="-2.77908985285569E-06 -7.99146859797872E-12 0.00489456333940175"
+        rpy="0 0 0" />
+      <mass
+        value="0.392331941011053" />
+      <inertia
+        ixx="0.000964450037448558"
+        ixy="-2.86275464258017E-14"
+        ixz="1.08973166428613E-07"
+        iyy="0.000964445525197834"
+        iyz="1.1381452267601E-13"
+        izz="0.000145722784840372" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://link_description/meshes/motor_BL.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://link_description/meshes/motor_BL.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="joint4"
+    type="fixed">
+    <origin
+      xyz="-0.139509919597085 -0.367672437357655 -0.0874779116165722"
+      rpy="1.5707963267949 0 3.14159265358979" />
+    <parent
+      link="link_description" />
+    <child
+      link="motor_BL" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link
+    name="wheel_BL">
+    <inertial>
+      <origin
+        xyz="-3.43663935034183E-05 0.0429524655918614 -4.60741023821931E-05"
+        rpy="0 0 0" />
+      <mass
+        value="1.62613225567425" />
+      <inertia
+        ixx="0.00550390517907719"
+        ixy="-3.82590491778839E-07"
+        ixz="2.64117005604506E-08"
+        iyy="0.0102678418204279"
+        iyz="-5.10107907494091E-07"
+        izz="0.0055046856452938" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://link_description/meshes/wheel_BL.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://link_description/meshes/wheel_BL.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="joint8"
+    type="continuous">
+    <origin
+      xyz="0 0 0.0965999999999965"
+      rpy="1.57079632679491 0 1.57079632679486" />
+    <parent
+      link="motor_BL" />
+    <child
+      link="wheel_BL" />
+    <axis
+      xyz="0 1 0" />
+  </joint>
+</robot>

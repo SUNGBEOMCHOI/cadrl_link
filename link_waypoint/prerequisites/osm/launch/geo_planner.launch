@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+
+<!-- Launch file for visualizing an OSM-derived map, and planning on top of it. -->
+
+<launch>
+  <!-- The URL to the OSM file -->
+  <arg name="map_url" default="package://osm_cartography/maps/yonsei2.osm" />
+  <!--arg name="map_url" default="package://osm_cartography/maps/yonsei.osm" /-->
+
+  <!-- Start map server -->
+  <node pkg="osm_cartography" type="osm_server" name="osm_server" output="screen" />
+
+  <!-- Start map visualization -->
+  <node pkg="osm_cartography" type="viz_osm" name="viz_osm" >
+    <param name="map_url" value="$(arg map_url)" />
+  </node>
+  
+  <!-- Build a graph out of the OSM information -->
+  <!--node pkg="route_network" type="route_network" name="route_network" >
+      <param name="map_url" value="$(arg map_url)" />
+  </node-->
+  
+  <!-- Provide the planning service -->
+  <!--node pkg="route_network" type="plan_route" name="plan_route" /-->
+
+  <node pkg="tf" type="static_transform_publisher" name="tf_world_map" args="0 0 0 0 0 0 1 /world /map 100" >
+    <param name="capability_group" value="0 tf"/>
+  </node>
+  <!--Gps broadcaster to get initial pose from GPS module-->
+  <!--node pkg="link_waypoint_nav" type="gps_broadcaster" name="gps_broadcaster" output="screen" /-->
+
+  <!-- Use this tf to properly locate the visualization on RVIZ. The arguments must contain the correct UTM coordinates for the map used -->
+  <!-- This is for bangbang.osm-->
+  <!--326153 4151161.14-->
+  <!-- park:326168 4151147.37-->
+  <!-- yonsei: 293820.94 4139765.51 -->
+  <!-- Samil: 326042.98 4151147.58-->
+  <!--node pkg="tf" type="static_transform_publisher" name="tf_map_local_map" args="293849.63 4139736.26 0 0 0 2.4 1 /map /local_map 100" >
+    <param name="capability_group" value="0 tf"/>
+  </node--> 
+  <node pkg="tf" type="static_transform_publisher" name="tf_map_local_map" args="293843.34 4139815.14 0 3.14 0 0  /map /local_map 100" >
+    <param name="capability_group" value="0 tf"/>
+  </node>
+  <!--temporary tranform publisher--> 
+  <node pkg="tf2_ros" type="static_transform_publisher" name="tf_lmap_odom" args="0 0 0 0 0 0 1 local_map odom " />
+
+  <!--node name="rviz" pkg="rviz" type="rviz" args="-d $(find osm_cartography)/rviz/link_rviz.rviz"/-->
+  <!-- Handle start and goal positions via RVIZ -->
+  <!--
+   In RVIZ: 
+     Start Position: 2D Pose Estimate (topic: /initialpose)
+     Goal Position: 2D Nav Goal (topic: /goal)
+  -->
+  <!--node pkg="route_network" type="rviz_goal" name="rviz_goal" /-->
+<!--samil 326041.34 326041.34-->
+<!--office:326061.49 4151110.89-->
+  <!--node pkg="tf" type="static_transform_publisher" name="tf_map_local_map" args="326040.88 4151038.72 0 0 0 0 1 /map /local_map 100" /-->
+</launch>

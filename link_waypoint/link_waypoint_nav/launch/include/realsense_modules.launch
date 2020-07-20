@@ -1,0 +1,39 @@
+<?xml version="1.0"?> <!--Software License Agreement (BSD)-->
+
+<launch>
+  <arg name="node_start_delay" default="1.0" />
+  <!--Launches realsense camera--> 
+  <include file="$(find realsense2_camera)/launch/rs_camera_map.launch"/>
+  <!--include file="$(find realsense2_camera)/launch/rs_camera_light.launch"/-->
+
+  <arg name="scan_topic" default="/scan" />
+  <arg name="map_topic" default="map" />
+  <!--Generates laserscan from depth image-->
+  <node pkg="depthimage_to_laserscan" name="depth_to_laser" type="depthimage_to_laserscan" output="log" launch-prefix="bash -c 'sleep $(arg node_start_delay); $0 $@' " >
+    <remap from="image" to="camera/depth/image_rect_raw"/>
+    <param name="range_max" type="double" value="5.0"/>
+    <remap from="camera_info" to="camera/depth/camera_info"/>
+    <remap from="/scan" to="/scan_unfiltered"/>
+  </node>
+
+  <node pkg="laser_filters" type="scan_to_scan_filter_chain" name="laser_filter">
+    <rosparam command="load" file="$(find link_waypoint_nav)/params/bounding_box_filter.yaml" />
+    <remap from="/scan" to="/scan_unfiltered" />
+    <remap from="/scan_filtered" to="/scan" />
+  </node>
+
+  <!--rgbd_odometry from rtabmap_ros-->
+  <!--node name="rgbd_odometry" pkg="rtabmap_ros" type="rgbd_odometry" launch-prefix="bash -c 'sleep $(arg node_start_delay); $0 $@' ">
+    
+   <remap from="depth/image" to="camera/depth/image_rect_raw" />
+   <remap from="rgb/camera_info" to="camera/color/camera_info"/>
+   <remap from="rgb/image" to="camera/color/image_raw"/>
+   <remap from="odom" to="rgbd/odom"/>
+   <rosparam>
+     publish_tf: false
+   </rosparam>
+  </node-->
+
+  <node pkg="tf" type="static_transform_publisher" name="realsense_broadcaster" args="0 0 0.4 0 0 0 base_link camera_link 10"/>
+
+</launch>

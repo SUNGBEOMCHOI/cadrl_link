@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<launch>
+
+  <group ns="gps">
+
+    <node pkg="nmea_comms" type="serial_node" name="nmea_serial_node"> <!--output="screen"-->  
+ 
+    <!--node pkg="nmea_navsat_driver" type="nmea_serial_driver" name="nmea_serial_node"-->	      
+        <param name="port" value="/dev/gps" />
+        <param name="baud" value="9600" />
+    </node>	
+    
+    <node pkg="nmea_navsat_driver" type="nmea_topic_driver" name="nmea_topic_driver">
+        <remap from="/gps/fix" to="/navsat/fix" />
+    </node>
+
+    <node pkg="tf" type="static_transform_publisher" name="navsat_broadcaster" args="0 0 0 0 0 0 base_link navsat 1000"/>
+
+  </group> 
+
+  
+
+</launch>

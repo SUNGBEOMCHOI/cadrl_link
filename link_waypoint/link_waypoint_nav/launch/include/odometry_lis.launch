@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<launch>
+
+        <!--Odometry listener -->
+        <node pkg="link_waypoint_nav" name="odometry_logger" type="odometry_sub.py" launch-prefix="sudo -E PYTHONPATH=$(env PYTHONPATH)" output="screen" />
+
+</launch>

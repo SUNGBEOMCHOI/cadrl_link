@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<package>
+  <name>link_navigation</name>
+  <version>0.0.1</version>
+  <description>navigation stack for link</description>
+  <maintainer email="_@neubility.co.kr" >neubility</maintainer>
+  <license>BSD</license>
+
+  <url type="website"></url>
+  <url type="repository"></url>
+  <url type="bugtracker"></url>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <build_depend>move_base</build_depend>
+  <build_depend>link_waypoint_nav</build_depend>
+  <build_depend>robot_localization</build_depend>
+
+  <run_depend>link_waypoint_nav</run_depend>
+  <run_depend>move_base</run_depend>
+  <run_depend>robot_localization</run_depend>
+
+</package>

@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<launch>
+  <node ns="wheel_encoder" name="encoder_odom" pkg="encoder_odometry" type="odometry">
+    <!-- for Subscriber -->
+    <remap from="pos" to="/pos"/>
+    <!-- for Publisher -->
+    <!--remap from="odom" to=""-->
+  </node>
+</launch>

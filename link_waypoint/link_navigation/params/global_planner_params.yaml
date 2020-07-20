@@ -1,0 +1,5 @@
+#Global planner params
+NavfnROS:
+  neutral_cost: 50
+  cost_factor: 0.1
+  orientation_mode: 2

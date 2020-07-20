@@ -1,0 +1,13 @@
+shutdown_costmaps: false
+
+controller_frequency: 20
+controller_patience: 10
+
+planner_frequency: 10.0
+planner_patience: 5.0
+
+oscillation_timeout: 0.0
+oscillation_distance: 1
+
+recovery_behavior_enabled: false
+clearing_rotation_allowed: false

@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+
+<launch>
+    <!-- Launch GPS -->
+    <include file="$(find link_waypoint_nav)/launch/include/gps.launch" />
+    
+    <!--Gps broadcaster to get initial pose from GPS module-->
+    <node pkg="link_waypoint_nav" type="gps_broadcaster" name="gps_broadcaster" output="screen" />
+</launch>

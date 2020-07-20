@@ -1,0 +1,28 @@
+.nfs*
+*_wrap.c
+*_wrap.cxx
+*.o
+*.so
+*.pyc
+*~
+build/
+CMakeFiles/
+CMakeCache.txt
+install_manifest.txt
+*.*sw*
+*.orig
+*.rej
+*.log
+*.gz
+
+# automatically created blender scenes
+*.blend1
+*.blend2
+*.blend3
+scene.*.blend
+
+# Eclipse project files
+.project
+.pydevproject
+.settings
+.metadata

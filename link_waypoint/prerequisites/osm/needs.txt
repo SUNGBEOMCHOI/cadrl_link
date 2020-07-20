@@ -1,0 +1,7 @@
+need python2 to use this
+ros-melodic-*
+geodesy 
+sudo apt-get install -y ros-visualization-msgs
+rosproj
+osm-cartography
+

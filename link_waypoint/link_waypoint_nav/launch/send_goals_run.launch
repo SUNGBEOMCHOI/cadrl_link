@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+
+<launch>
+
+<!-- Launch send_goal -->
+    <include file="$(find link_waypoint_nav)/launch/include/send_goals.launch" />
+
+
+</launch>

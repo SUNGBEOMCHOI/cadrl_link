@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+
+<launch>
+
+   <master auto="start"/>
+   <param name="/use_sim_time" value="false"/>
+ 
+ <!-- Display Link_description on rviz -->
+    <include file="$(find link_description)/launch/link_display.launch" />
+
+ <!-- Launch Ultrasonic publisher -->
+    <!--include file="$(find ultrasonic_ros)/launch/usonic_pub.launch" /-->
+
+ <!-- Launch rosserial -->
+
+    <!--node name="serial_node_link" pkg="rosserial_python" type="serial_node.py">
+        <param name="port" value="/dev/ttyACM0" />
+        <param name="baud" value="57600" />
+    </node-->
+
+ <!-- Launch wheel encoder -->   
+    <!--include file="$(find link_waypoint_nav)/launch/include/wheel_encoder.launch"/-->
+
+ <!-- Launch e2box IMU -->   
+    <!--include file="$(find link_waypoint_nav)/launch/include/imu.launch"/-->
+
+ <!-- Launch GPS -->
+    <!--include file="$(find link_waypoint_nav)/launch/include/gps.launch" /-->
+
+ <!--Launch realsense modules including laser scan conversion and rgbd odometry -->
+
+    <!--include file="$(find link_waypoint_nav)/launch/include/realsense_modules.launch" /--> 
+    
+ <!--Launch rtab localization-->
+    <!--include file="$(find link_waypoint_nav)/launch/include/rtab_localization.launch" /-->
+
+ <!---Launch Localization(ekf, navsat tf) -->    
+    <!--include file="$(find link_waypoint_nav)/launch/include/localization_m.launch" /-->
+
+ <!-- Run gmapping to create map -->
+    <!--include file="$(find link_navigation)/launch/gmapping.launch" /-->
+
+ <!-- Launch move_base -->  
+    <!--include file="$(find link_navigation)/launch/move_base_nav_m.launch" /-->
+
+ <!-- Launch osm -->  
+    <include file="$(find osm_cartography)/launch/geo_planner.launch" />
+
+ <!-- Launch send_goal -->
+    <!--include file="$(find link_waypoint_nav)/launch/include/send_goals.launch" /-->
+
+    <node pkg="tf" type="static_transform_publisher" name="laserscan_broadcaster" args="0 0 0 0 0 0 base_link base_laser_link 100"/>
+</launch> 

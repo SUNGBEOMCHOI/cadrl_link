@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- ultrasonic to get distance  -->
+  <node pkg="ultrasonic_ros" name="send_distance" type="get_distance_ros.py" launch-prefix="sudo -E PYTHONPATH=$(env PYTHONPATH)" output="screen">       
+  <!-- parameters -->
+    <param name="port_0" type="string" value="/dev/us1" />
+    <param name="port_1" type="string" value="/dev/us2" />
+  </node>
+</launch>

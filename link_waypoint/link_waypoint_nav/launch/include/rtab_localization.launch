@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<launch>
+  <include file="$(find link_waypoint_nav)/launch/rtab_mapper.launch">
+    <arg name="localization"      value="true"/>
+  </include>
+</launch>

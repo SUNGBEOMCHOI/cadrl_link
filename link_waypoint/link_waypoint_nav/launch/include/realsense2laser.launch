@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!--Software License Agreement (BSD)-->
+
+<launch>
+
+  <include file="$(find realsense2_camera)/launch/rs_camera_light.launch"/>
+
+  <arg name="scan_topic" default="/scan" />
+  <arg name="map_topic" default="map" />
+
+  <node pkg="depthimage_to_laserscan" name="depth_to_laser" type="depthimage_to_laserscan" output="log">
+    <remap from="image" to="camera/depth/image_rect_raw"/>
+    <param name="range_max" type="double" value="5.0"/>
+    <remap from="camera_info" to="camera/depth/camera_info"/>
+    <remap from="/scan" to="/scan_unfiltered"/>
+  </node>
+
+  <node pkg="laser_filters" type="scan_to_scan_filter_chain" name="laser_filter">
+    <rosparam command="load" file="$(find link_waypoint_nav)/params/bounding_box_filter.yaml" />
+    <remap from="/scan" to="/scan_unfiltered" />
+    <remap from="/scan_filtered" to="/scan" />
+  </node>
+
+  <node pkg="tf" type="static_transform_publisher" name="realsense_broadcaster" args="0 0 0 0 0 0 base_link camera_link 30"/>
+
+</launch>

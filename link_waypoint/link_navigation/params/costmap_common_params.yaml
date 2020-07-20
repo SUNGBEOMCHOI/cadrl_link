@@ -1,0 +1,30 @@
+#
+map_type: costmap
+origin_z: 0.0
+z_resolution: 1 # The z resolution of the map in meters/cell.
+z_voxels: 1  # The number of voxels to in each vertical column, the height of the grid is z resolution * z voxels.
+#
+transform_tolerance: 5.0
+obstacle_range: 5.0 # The default maximum distance from the robot at which an obstacle will be inserted into the cost map in meters.
+raytrace_range: 6.0 # The default range in meters at which to raytrace out obstacles from the map using sensor data
+#
+publish_voxel_map: false
+always_send_full_costmap: false
+max_obstacle_height: 1.0
+
+footprint: [[0.1, 0.1], [-0.1, 0.1], [-0.1, -0.1], [0.1, -0.1], [0.24, 0]] #It might be "polygon," so might be changed. 
+
+footprint_padding: 0.1
+inflation_radius: 0.2  # controls how far away the zero cost point is from the obstacle
+
+
+
+cost_scaling_factor: 0.1 # slope of the cost decay curve with respect to distance from the object. lower makes robot stay further from obstacles
+
+#observation_sources: point_cloud_sensor_0 point_cloud_sensor_1
+observation_sources: laser_scan_sensor point_cloud_sensor_1 
+
+#point_cloud_sensor_0: {sensor_frame: camera_link, data_type: PointCloud2, topic: /camera/depth/color/points, marking: true, clearing: true, min_obstacle_height: 0.4}
+point_cloud_sensor_1: {sensor_frame: camera_link, data_type: PointCloud2, topic: /camera/depth/color/points, marking: false, clearing: true, min_obstacle_height: -0.4}
+laser_scan_sensor: {sensor_frame: base_laser_link, data_type: LaserScan, topic: /scan, marking: true, clearing: true, min_obstacle_height: -0.2}
+#point_cloud_sensor_2: {sensor_frame: local_map, data_type: PointCloud2, topic: /rtabmap/grid_map, marking: True, clearing: False}

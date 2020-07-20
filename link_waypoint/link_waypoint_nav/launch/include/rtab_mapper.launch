@@ -1,0 +1,117 @@
+<?xml version="1.0"?>
+<launch>
+    <!--Argument for RTAB Map-->
+    <arg name="localization"      default="false"/>
+    <arg name="rgb_topic"      default="/camera/color/image_raw"/>
+    <arg name="rgb_info_topic"      default="/camera/color/camera_info"/>
+    <arg name="depth_topic"      default="/camera/aligned_depth_to_color/image_raw"/>
+    <arg name="wait_for_transform"  default="0.2"/>
+    <arg name="node_start_delay" default="1.0" />
+    <arg name="rtabmapviz"        default="false"/>
+
+    <!-- Launch when Mapping-->
+    <group unless="$(arg localization)">
+
+        <!-- Display Link_description on rviz -->
+        <include file="$(find link_description)/launch/link_display.launch" />
+
+        <!-- Launch rosserial -->
+        <node name="serial_node_link" pkg="rosserial_python" type="serial_node.py">
+            <param name="port" value="/dev/ttyACM0" />
+            <param name="baud" value="57600" />
+        </node>
+
+        <!-- Launch realsense_camera -->  
+        <include file="$(find realsense2_camera)/launch/rs_camera_map.launch"/>
+
+        <!-- Launch imu -->  
+        <!--include file="$(find link_waypoint_nav)/launch/include/imu.launch"/-->
+        
+        <!-- Launch osm -->  
+        <include file="$(find osm_cartography)/launch/geo_planner.launch" />
+        <!-- broadcaster when mapping-->
+        <node pkg="tf" type="static_transform_publisher" name="realsense_mapping_broadcaster" args="0.2 0 0.4 0 0 0 base_link camera_link 10"/>
+        <!--node pkg="tf" type="static_transform_publisher" name="odom2base_mapping_broadcaster" args="0 0 0 0 0 0 odom base_link 10"/-->
+    </group>
+
+    <!-- Localization-only mode -->
+    <arg     if="$(arg localization)" name="rtabmap_args"  default=""/>
+    <arg unless="$(arg localization)" name="rtabmap_args"  default="--delete_db_on_start"/>
+    
+    <node name="rtabmap" pkg="rtabmap_ros" type="rtabmap" output="screen" launch-prefix="bash -c 'sleep $(arg node_start_delay); $0 $@' ">
+      <param name="rtabmap_args"       value="--delete_db_on_start"/>
+      <param name="subscribe_depth" type="bool" value="true"/>
+      <param name="subscribe_scan"      type="bool"   value="false"/>
+      <param name="frame_id"           value="base_link"/>
+      <param name="map_frame_id"       value="local_map"/>
+      <param name="visual_odometry"    value="false"/>
+
+      <remap from="rgb/image" to="$(arg rgb_topic)"/>
+      <remap from="rgb/camera_info" to="$(arg rgb_info_topic)"/>
+      <remap from="depth/image" to="$(arg depth_topic)"/>
+      <remap from="odom" to="/rgbd/odom"/>
+
+      <param name="queue_size"         value="200"/>
+      <param name="wait_imu_to_init"   value="false"/>
+      <param name="imu_topic"          value="/imu/data"/>
+      
+      <!-- RTAB-Map's parameters: do "rosrun rtabmap rtabmap (double-dash)params" to see the list of available parameters. -->
+      <param name="RGBD/ProximityBySpace"        type="string" value="true"/>   <!-- Local loop closure detection (using estimated position) with locations in WM -->
+      <param name="RGBD/OptimizeFromGraphEnd"    type="string" value="false"/>  <!-- Set to false to generate map correction between /map and /odom -->
+      <param name="Kp/MaxDepth"                  type="string" value="4.0"/>
+      <param name="Reg/Strategy"                 type="string" value="0"/>      <!-- Loop closure transformation: 0=Visual, 1=ICP, 2=Visual+ICP -->
+      <param name="Icp/CorrespondenceRatio"      type="string" value="0.3"/>
+      <param name="Vis/MinInliers"               type="string" value="15"/>     <!-- 3D visual words minimum inliers to accept loop closure -->
+      <param name="Vis/InlierDistance"           type="string" value="0.1"/>    <!-- 3D visual words correspondence distance -->
+      <param name="Vis/MaxFeatures"              type="string" value="600"/>
+      <param name="Vis/CorType"                  type="string" value="1"/>      <!--Optical Flow-->
+      <param name="Vis/EstimationType"           type="string" value="1"/>      <!--2D-> 3D PnP-->
+      <param name="RGBD/AngularUpdate"           type="string" value="0.1"/>    <!-- Update map only if the robot is moving -->
+      <param name="RGBD/LinearUpdate"            type="string" value="0.1"/>    <!-- Update map only if the robot is moving -->
+      <param name="RGBD/ProximityPathMaxNeighbors" type="string" value="0"/>
+      <param name="Rtabmap/TimeThr"              type="string" value="700"/>
+      <param name="Mem/RehearsalSimilarity"      type="string" value="0.30"/>
+      <param name="Reg/Force3DoF"                value="true"/>   		<!--For UGV and flat surface-->
+      <param name="GridGlobal/MinSize"           type="string" value="20"/>
+      <param name="RGBD/OptimizeMaxError"        type="string" value="0.1"/>
+      <param name="Rtabmap/StartNewMapOnLoopClosure" value="true"/>             <!--Odometry auto reset when lost(starts again when loop closure found)-->
+      <!--param name="Odom/ResetCountdown"              value="1" /-->          <!--Odometry reset, starts new map when lost-->
+      <param name="Odom/Strategy"                type="string" value="1"/>      <!--Frame to Frame odometry-->
+      <param name="Odom/GuessMotion"             value="true"/>                 <!-- Use Guess from previous motion for correspondences-->
+      <param name="cloud_noise_filtering_radius" value="0.05"/>			<!--Reduce Point Cloud Noise-->
+      <param name="cloud_noise_filtering_min_neighbors" value="2"/>
+
+      <!-- localization mode -->
+      <param if="$(arg localization)" name="Mem/IncrementalMemory" type="string" value="false"/>
+      <param if="$(arg localization)" name="Mem/InitWMWithAllNodes" type="string" value="true"/>
+      <param if="$(arg localization)" name="RGBD/SavedLocalizationIgnored" type="string" value="true"/>
+
+    </node>
+
+    <!--rgbd_odometry from rtabmap_ros-->
+    <node name="rgbd_odometry" pkg="rtabmap_ros" type="rgbd_odometry" >
+       <remap from="rgb/image" to="$(arg rgb_topic)"/>
+       <remap from="rgb/camera_info" to="$(arg rgb_info_topic)"/>
+       <remap from="depth/image" to="$(arg depth_topic)"/>
+       <remap from="odom" to="rgbd/odom"/>
+    <!--param name="Odom/ResetCountdown"              value="1" /-->          <!--Odometry reset, starts new map when lost-->
+    <rosparam>
+     publish_tf: true
+     approx_sync: false
+    </rosparam>
+   </node>
+
+    <!-- visualization with rtabmapviz -->
+    <node if="$(arg rtabmapviz)" pkg="rtabmap_ros" type="rtabmapviz" name="rtabmapviz" args="-d $(find rtabmap_ros)/launch/config/rgbd_gui.ini" output="screen">
+      <param name="subscribe_depth"             type="bool" value="true"/>
+      <param name="subscribe_scan"              type="bool" value="false"/>
+      <param name="frame_id"                    type="string" value="base_footprint"/>
+      <param name="wait_for_transform_duration" type="double" value="$(arg wait_for_transform)"/>
+
+      <remap from="rgb/image"       to="$(arg rgb_topic)"/>
+      <remap from="depth/image"     to="$(arg depth_topic)"/>
+      <remap from="rgb/camera_info" to="$(arg rgb_info_topic)"/>
+      <remap from="odom" to="rgbd/odom"/>
+      <remap from="scan"            to="/scan"/>
+    </node>
+</launch>

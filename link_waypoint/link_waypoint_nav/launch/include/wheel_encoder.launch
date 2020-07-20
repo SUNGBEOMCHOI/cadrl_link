@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<!--Software License Agreement (BSD)-->
+
+<launch>
+  <include file="$(find encoder_odometry)/launch/encoder_odom.launch"/>
+ </launch>

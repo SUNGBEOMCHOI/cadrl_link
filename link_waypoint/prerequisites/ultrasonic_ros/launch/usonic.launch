@@ -1,0 +1,9 @@
+<launch>
+	
+        <!--  -->
+        <node pkg="ultrasonic_ros" name="send_distance" type="get_distance_ros.py" launch-prefix="sudo -E PYTHONPATH=$(env PYTHONPATH)" output="screen" />
+
+        <!-- -->
+        <node pkg="ultrasonic_ros" name="listener" type="listener_ros.py" />
+
+</launch>

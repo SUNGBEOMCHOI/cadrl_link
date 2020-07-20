@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+
+<launch>
+  <arg name="node_start_delay" default="5.0"/>
+  <arg name="osm_map_path" default="$(find link_waypoint_nav)/../prerequisites/osm/maps/yonsei2.osm"/>
+  <!-- Run the map server -->
+  <!--node name="map_server" pkg="map_server" type="map_server">
+        <param name="frame_id" value="/local_map" />
+  </node-->
+  <node pkg="move_base" type="move_base" respawn="true" name="move_base" output="screen" launch-prefix="bash -c 'sleep $(arg node_start_delay); $0 $@' "> <!--output="screen"-->    
+    <rosparam file="$(find link_navigation)/params/costmap_common_params.yaml" command="load" ns="global_costmap" />
+    <rosparam file="$(find link_navigation)/params/costmap_common_params.yaml" command="load" ns="local_costmap" />
+    <rosparam file="$(find link_navigation)/params/local_costmap_params.yaml" command="load" />
+    <rosparam file="$(find link_navigation)/params/global_costmap_params.yaml" command="load" />
+    <rosparam file="$(find link_navigation)/params/osm_planner_params.yaml" command="load" />
+    <rosparam file="$(find link_navigation)/params/teb_local_planner_params.yaml" command="load" />
+    <!--rosparam file="$(find link_navigation)/params/base_local_planner_params.yaml" command="load" /-->
+    <!--rosparam file="$(find link_navigation)/params/global_planner_params.yaml" command="load" /-->
+    <rosparam file="$(find link_navigation)/params/costmap_conversion_params.yaml" command="load"/>
+
+    <rosparam file="$(find link_navigation)/params/move_base_params_m.yaml" command="load" />
+    <param name="Planner/osm_map_path" value="$(arg osm_map_path)"/>
+    <!--param name="base_global_planner" type="string" value="navfn/NavfnROS" /-->
+    <param name="base_global_planner" type="string" value="osm_planner/Planner" />
+    <param name="base_local_planner" type="string" value="teb_local_planner/TebLocalPlannerROS"/>
+    <!--param name="base_local_planner" type="string" value="base_local_planner/TrajectoryPlannerROS"/-->
+    <remap from="odom" to="/link_waypoint_nav/odometry/filtered" />
+    <!--remap from="obstacles" to="/obstacles" /-->
+    <!--remap from="/map" to="/rtabmap/grid_map" /-->
+    <!--remap from="/move_base_simple/goal" to="/move_base/goal" /-->
+
+  </node>
+  <!--node pkg="tf" type="static_transform_publisher" name="laserscan_broadcaster" args="0 0 0 0 0 0 base_link base_laser_link 100"/-->
+  <!--node pkg="tf" type="static_transform_publisher" name="realsense_broadcaster" args="0 0 0.45 1.57 0 0 odom camera_link 30"/-->
+  <!--node pkg="tf" type="static_transform_publisher" name="odom2baselink_broadcaster" args="0 0 0 0 0 0 base_link camera_link 30" /-->
+</launch>
+
+

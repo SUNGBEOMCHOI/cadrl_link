@@ -1,0 +1,20 @@
+DWAPlannerROS:
+  max_vel_x: 0.3 #Velocity might affect the resources usage. 
+  min_vel_x: -0.2
+  max_vel_y: 0.0
+  min_vel_y: 0.0
+
+  acc_lim_x: 1.0
+  acc_lim_y: 0
+  acc_lim_th: 1.5
+
+  max_trans_vel: 0.5
+  min_trans_vel: 0.3
+
+  max_rot_vel: 1.0
+  min_rot_vel: 0.4
+
+  yaw_goal_tolerance: 0.5
+  xy_goal_tolerance: 0.1
+
+  occdist_scale: 0.005

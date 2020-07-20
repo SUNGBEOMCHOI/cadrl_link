@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+
+<launch>
+	<!-- launch collect gps waypoint for link-->
+	<!--node ns="/link_waypoint_nav" pkg="link_waypoint_nav" type="link_collect_gps" name="link_collect_gps_waypoint" output="screen" />
+	<param name="/link_waypoint_nav/coordinates_file" value="/waypoint_files/collected_points_gps.txt" type="string" /-->
+
+	<!-- launch collect pose waypoint for link simulation-->
+	<!--node ns="/link_waypoint_nav" pkg="link_waypoint_nav" type="point_collect_sim" name="link_collect_waypoint_sim" output="screen" />
+	<param name="/link_waypoint_nav/coordinates_file" value="/waypoint_files/collected_points_sim.txt" type="string" /-->
+        
+        <!-- launch collect pose waypoint for link simulation-->
+	<node ns="/link_waypoint_nav" pkg="link_waypoint_nav" type="point_collect_latlong" name="link_collect_waypoint_latlong" output="screen" />
+	<param name="/link_waypoint_nav/coordinates_file" value="/waypoint_files/collected_points_latlong.txt" type="string" />
+ 	<param name="/link_waypoint_nav/utm_x_trans" value="326158.77" type="double" />
+	<param name="/link_waypoint_nav/utm_y_trans" value="4151160.70" type="double" />
+	
+
+</launch>

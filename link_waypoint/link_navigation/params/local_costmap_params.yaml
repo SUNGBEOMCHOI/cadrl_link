@@ -1,0 +1,10 @@
+local_costmap:
+  global_frame: odom
+  robot_base_frame: base_link
+  update_frequency: 5.0 #Originally 10
+  publish_frequency: 3.0 #Originally 5
+  static_map: false
+  rolling_window: true
+  width: 6.0 # 5.0, less than 5 is proper. might try. 
+  height: 6.0 # 5.0
+  resolution: 0.1
